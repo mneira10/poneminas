@@ -6,8 +6,8 @@ export default class Board extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      dimensions: { rows: 5, cols: 5 },
-      numBombs: 3
+      dimensions: { rows: 20, cols: 20 },
+      numBombs: 100
     };
     this.cells = [];
   }

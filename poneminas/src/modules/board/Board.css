@@ -1,9 +1,12 @@
-#board-container{
-    position: relative;
+#board-container {
+    height: calc(100% - 50px);
+    width: calc(100% - 20px);
 }
 
 .grid-container {
-    position: absolute;
     display: grid;
     padding: 10px;
+    position: absolute;
+    /*left: 50%;*/
+    /*transform: translateX(-50%);*/
 }
