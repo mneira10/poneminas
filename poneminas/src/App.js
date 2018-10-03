@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import './App.css';
-import Board from './modules/Board';
+import React, { Component } from "react";
+import "./App.css";
+import Board from "./modules/board/Board";
 
 
 class App extends Component {

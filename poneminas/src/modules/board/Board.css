@@ -1,0 +1,9 @@
+#board-container{
+    position: relative;
+}
+
+.grid-container {
+    position: absolute;
+    display: grid;
+    padding: 10px;
+}
