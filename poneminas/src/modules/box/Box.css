@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Titan+One');
+
 .grid-item {
     text-align: center;
     cursor: pointer;
     width: 30px;
     height: 30px;
     outline: none;
+    font-size: 1.5em;
+    font-family: 'Titan One', cursive;
 }
 
 .grid-item:hover {

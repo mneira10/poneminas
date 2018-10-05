@@ -105,7 +105,9 @@ export default class Board extends Component {
       if ( !this.cells[ r ][ c ].current.show() ) {
         this.cells[ r ][ c ].current.show( true );
         if ( !this.firstClick ) {
-          this.floodFill( r, c, 3 ); //TODO: 3 as depth
+          // TODO: remove bomb
+          // TODO: 3 as depth
+          this.floodFill( r, c, 3 );
           this.firstClick = true;
           this.forceUpdate();
         }

@@ -6,6 +6,17 @@ export const constants = {
   "BOMB": "-"
 };
 
+const colors = {
+  1: "#014f87",
+  2: "#6c8701",
+  3: "#873d01",
+  4: "#012953",
+  5: "#ffc201",
+  6: "#8e0199",
+  7: "#888888",
+  8: "#212121",
+};
+
 export default class Box extends Component {
 
   constructor( props ) {
@@ -50,7 +61,7 @@ export default class Box extends Component {
     }
 
     return (
-      <button className={"grid-item " + (this.state.show ? "active" : "")}
+      <button className={"grid-item " + (this.state.show ? "active" : "")} style={{ color: (this.state.show && colors[ this.props.state ]) }}
         onClick={this.handleClick}
         onContextMenu={this.contextHandleClick}>
         {this.state.flag !== 0 && box_state}
