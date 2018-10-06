@@ -1,4 +1,10 @@
-body {
-  padding: 10px;
-  font-family: sans-serif;
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: sans-serif;  
+}
+
+#render-target {
+  margin: 0;
+  height: 100%;
 }

@@ -1,6 +1,9 @@
 #board-container {
     height: calc(100% - 50px);
     width: calc(100% - 20px);
+    display: flex;
+    justify-content: center;
+    align-content: center;    
 }
 
 .grid-container {
