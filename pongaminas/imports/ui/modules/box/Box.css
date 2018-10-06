@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Titan+One');
+
+.grid-item {
+    text-align: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    outline: none;
+    font-size: 1.5em;
+    font-family: 'Titan One', cursive;
+}
+
+.grid-item:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.grid-item.active {
+    background-color: white;
+    border: 1px solid darkgray;
+}
+
+.fa-bomb{
+    color: red;
+}

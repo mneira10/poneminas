@@ -7,7 +7,7 @@ export default class Board extends Component {
     super( props );
     this.state = {
       dimensions: { rows: 10, cols: 10 },
-      numBombs: 10
+      numBombs: 30
     };
     this.cells = [];
     this.logicCells = [];

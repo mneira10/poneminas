@@ -36,14 +36,13 @@ export default class Box extends Component {
   }
 
   handleClick() {
-    
     if ( this.state.flag === 0 ) {
       this.props.boxClickHandle( this.props.row, this.props.col, this.props.state );
     }
   }
 
   contextHandleClick( e ) {
-    
+    console.log("right clicked");
     if ( !this.state.show ) {
       this.setState( { flag: (this.state.flag + 1) % 3 } );
     }
