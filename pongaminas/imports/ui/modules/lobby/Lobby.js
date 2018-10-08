@@ -94,10 +94,15 @@ class Lobby extends Component {
           
           <h1>Leaderboard</h1>
           {
-            Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].score]).sort((a,b)=>{
+            Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].score,this.props.session.users[k].status=="Lost"]).sort((a,b)=>{
+              if(b[2]!==a[2]){
+                return b[2] ? -1 : 1;
+              }
               return b[1]-a[1];
             }).map(e=>{
-              return <span className="user-lobby" key={e[0]}>{e[0]}: {e[1]}</span>;
+              let styleClass = "user-lobby ";
+              styleClass += e[2]?"lost":"";
+              return <span className={styleClass} key={e[0]}>{e[0]}: {e[1]}</span>;
             })
           }
         </div>

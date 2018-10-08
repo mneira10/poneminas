@@ -39,3 +39,7 @@
     display: block;
     padding: 10px;
 }
+
+.lost { 
+    text-decoration:line-through;
+}
