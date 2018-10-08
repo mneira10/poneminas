@@ -81,7 +81,7 @@ class Lobby extends Component {
             <div>
               <h1>Game has started</h1>
               <div>
-                <Board 
+                <Board
                   session_id={this.props.session._id}
                   rows={this.props.session.config.numRows}
                   cols={this.props.session.config.numCols}
@@ -91,10 +91,15 @@ class Lobby extends Component {
             </div>
             //board goes here
           }
-
-          {Object.keys( this.props.session.users ).map( ( u ) => {
-            return <span className="user-lobby" key={u}>{u}</span>;
-          } )}
+          
+          <h1>Leaderboard</h1>
+          {
+            Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].score]).sort((a,b)=>{
+              return b[1]-a[1];
+            }).map(e=>{
+              return <span className="user-lobby" key={e[0]}>{e[0]}: {e[1]}</span>;
+            })
+          }
         </div>
       </div>
     );
