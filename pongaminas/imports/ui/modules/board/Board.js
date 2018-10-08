@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./Board.css";
 import Box, { constants } from "../box/Box";
+import PropTypes from "prop-types";
+import { Sessions } from "../../../api/sessions";
 
 export default class Board extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      dimensions: { rows: 10, cols: 10 },
-      numBombs: 30
+      dimensions: { rows: props.rows, cols: props.cols },
+      numBombs: props.bombs
     };
     this.cells = [];
     this.logicCells = [];
@@ -17,6 +19,7 @@ export default class Board extends Component {
 
     this.boxClickHandle = this.boxClickHandle.bind( this );
     this.showBoard = this.showBoard.bind( this );
+    this.bombDiscovered = this.bombDiscovered.bind( this );
 
     this.initGame();
   }
@@ -114,6 +117,13 @@ export default class Board extends Component {
         else if ( state === constants.BOMB ) {
           this.lost = true;
           this.showBoard();
+
+          let up = {};
+          up[`users.${this.props.currentUser.username}.status`] = "Lost";
+          Sessions.update(
+            {_id: this.props.session_id},
+            { "$set": up }
+          );
         }
         else if ( state === 0 ) {
           this.floodFillZero( r, c );
@@ -155,6 +165,17 @@ export default class Board extends Component {
     }
   }
 
+  bombDiscovered(isAdding){
+    console.log("Updating", this.props.session_id);
+    
+    let up = {};
+    up[`users.${this.props.currentUser.username}.score`] =(isAdding ? 1 : -1);
+    Sessions.update(
+      {_id: this.props.session_id},
+      { "$inc":  up}
+    );
+  }
+
   render() {
     this.cells = [];
     return (
@@ -171,7 +192,8 @@ export default class Board extends Component {
                 row={c.row}
                 col={c.col}
                 ref={this.cells[ c.row ][ c.col ]}
-                boxClickHandle={this.boxClickHandle}/>
+                boxClickHandle={this.boxClickHandle}
+                bombDiscovered={this.bombDiscovered}/>
             );
           } )}
         </div>
@@ -179,3 +201,11 @@ export default class Board extends Component {
     );
   }
 }
+
+Board.propTypes = {
+  rows: PropTypes.number.isRequired,
+  cols: PropTypes.number.isRequired,
+  bombs: PropTypes.number.isRequired,
+  session_id: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
+};

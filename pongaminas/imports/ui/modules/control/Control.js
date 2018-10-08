@@ -1,23 +1,50 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./control.css";
+import { withTracker } from "meteor/react-meteor-data";
+import { Sessions } from "../../../api/sessions";
+import {Meteor} from "meteor/meteor";
 
-export default class Control extends React.Component {
+class Control extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.interval = undefined;
+    this.state = {
+      duration: 0
+    };
+  }
+
+  componentDidMount(){
+    this.interval = setInterval(() =>{
+      this.setState({duration: this.state+1});
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
+    let bombsFound = 0;
+
+    this.props.session.users.filter((u) =>{
+      return u._id === this.props.currentUser._id;
+    });
+
     let status = (
       <div>
         <div>
           <span>{"Session: "}</span>
-          <span className="dashboard-item">1234</span>
+          <span className="dashboard-item">{this.props.session._id}</span>
         </div>
         <div>
           <span>{"Time: "}</span>
-          <span className="dashboard-item">05:00</span>
+          <span className="dashboard-item">{this.state.duration}</span>
         </div>
         <div>
           <span>{"Bombs: "}</span>
-          <span className="dashboard-item">2/3</span>
+          <span className="dashboard-item">{this.props.session.config.numBombs - bombsFound}</span>
         </div>
       </div>
     );
@@ -51,5 +78,15 @@ export default class Control extends React.Component {
 }
 
 Control.propTypes = {
-  onGame: PropTypes.bool.isRequired
+  onGame: PropTypes.bool.isRequired,
+  session_id: PropTypes.number.isRequired,
+  session: PropTypes.object,
+  currentUser : PropTypes.object,
 };
+
+export default withTracker( (props) => {
+  return {
+    session: Sessions.findOne( { "id": props.session_id } ),
+    currentUser: Meteor.user()
+  };
+} )( Control );

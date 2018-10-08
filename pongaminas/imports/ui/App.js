@@ -25,15 +25,6 @@ class App extends Component {
 
   render() {
     return (
-    // LO DE MILLOS
-    //   <div className="App">
-    //     <Control onGame={this.state.onGame}/>
-    //     <div>
-    //       {this.state.onGame ? <Board/> : <Welcome onLogin={this.onLogin}/>}
-    //     </div>
-    //   </div>
-
-    // LO DE MAURO
       <div className="App">
         <div className="signIn">
           <AccountsUIWrapper/>

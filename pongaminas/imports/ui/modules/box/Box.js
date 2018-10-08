@@ -42,9 +42,16 @@ export default class Box extends Component {
   }
 
   contextHandleClick( e ) {
-    console.log("right clicked");
+    let lastFlag = this.state.flag;
     if ( !this.state.show ) {
-      this.setState( { flag: (this.state.flag + 1) % 3 } );
+      this.setState( { flag: (this.state.flag + 1) % 3 }, () =>{
+        if( lastFlag === 1 && this.state.flag !== 1){
+          this.props.bombDiscovered(false);
+        }
+        else if(lastFlag !== 1 && this.state.flag == 1){
+          this.props.bombDiscovered(true);
+        }
+      } );
     }
     e.preventDefault();
   }
@@ -77,4 +84,5 @@ Box.propTypes = {
   row: PropTypes.number.isRequired,
   col: PropTypes.number.isRequired,
   boxClickHandle: PropTypes.func.isRequired,
+  bombDiscovered: PropTypes.func.isRequired
 };
