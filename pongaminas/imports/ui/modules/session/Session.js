@@ -14,8 +14,9 @@ class Session extends Component {
     this.state = {
       session: {
         active: false,
-        number: null
-      }
+        number: null,        
+      },
+      type : null,
     };
     this.join_session_input = React.createRef();
   }
@@ -25,28 +26,41 @@ class Session extends Component {
       e.preventDefault();
     }
     let session = parseInt( this.join_session_input.current.value );
+    console.log(session);
     if(session){
       let s = Sessions.findOne( { "id": session } );
-      if ( s.users.some( ( u ) => u._id === this.props.user._id ) ) {
-        this.setState( { session: { active: true, number: session, users: s.users } } );
-      }
-      else {
+      if ( !(this.props.user.username in s.users)) {
+
+        // this solution makes no sense, we know. But js is the devils 3rd testicle. 
+        // It did not let us do the query in any other way :(
+        
+        const temp = {};
+        temp["users."+this.props.user.username] = {score:0};
+        // temp  = {users.username : {score:0}}
+        const secondObj = { "$set": temp};
+
         Sessions.update(
           { _id: s._id },
-          { "$push": { users: {...this.props.user, bombs: 0} } }
+          secondObj
         );
-        this.setState( { session: { active: true, number: session, users: [ ...s.users, {...this.props.user, bombs: 0} ] } } );
+
+     
       }
+      this.setState( { session: { active: true, number: session } , type : "join"} );
     }
   }
 
   createSession() {
     const newSession = this.props.countSessions + 1;
-    this.setState( { session: { active: true, number: newSession, users: [ this.props.user ] } } );
+    this.setState( { session: { active: true, number: newSession } , type : "create"} );
+    
+    const user = {};
+    user[this.props.user.username] = {score:0};
+    
     Sessions.insert( {
       id: newSession, // session id
       createdAt: new Date(), // current time,
-      users: [ {...this.props.user, bombs: 0} ]
+      users: user,
     } );
   }
 
@@ -87,7 +101,7 @@ class Session extends Component {
           </div>
           :
           // if user is in a session
-          <Lobby session_id={this.state.session.number}/>
+          <Lobby session_id={this.state.session.number} sessionType={this.state.type}/>
         }
       </div>
     );
