@@ -7,20 +7,38 @@
 
 .App .signIn {
     position: absolute;
-    /* float:left; */
-    left: 1%;
-    top: 2%;
+    width: calc(100% - 20px);
+    height: 30px;
 }
-.container { 
-    /* position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)  */
+
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: calc(100% - 50px);
+    padding-top: 50px;
+}
+
+.signIn #login-sign-in-link,
+.signIn #login-name-link {
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.signIn .login-button#login-buttons-open-change-password,
+.signIn .login-button#login-buttons-password,
+.signIn .login-button#login-buttons-logout {
+    background-color: #212121;
+    color: white;
+}
+
+.signIn {
+    background-color: #212121;
+    padding: 10px;
+    color: white;
 }
 
 /* .welcome {
@@ -30,3 +48,23 @@
     margin-right: -50%;
     transform: translate(-50%, -50%) 
 } */
+
+
+#login-dropdown-list {
+    top: 30px;
+    left: 0;
+    transform: translateX(-25%);
+}
+
+button {
+    outline: none;
+}
+
+.welcome>h1 {
+    font-family: 'Frijole', cursive;
+}
+
+.welcome>h1,
+.welcome>.fas {
+    font-size: 3em;
+}

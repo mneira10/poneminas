@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Frijole');
+
+#session-container,
+#session-choose-container {
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+#session-choose {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+#session-create {
+    background-color: #DCE6DE;
+}
+
+#session-join {
+    background-color: #8D3C38;
+}
+
+#session-join button {
+    background-color: white;
+    border: 1px solid white;
+    padding: 6px;
+    cursor: pointer;
+}
+
+#session-join input {
+    border: none;
+    padding: 7px;
+}
+
+#session-choose-title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    width: 25%;
+    background-color: #212212;
+}
+
+.session-opt h1{
+    font-size: 3em; 
+}
+
+.session-opt {
+    font-family: 'Frijole', cursive;
+    display: grid;
+}
+
+.session-opt>div {
+    margin: auto;
+}
+
+.session-opt:hover {
+    background-color: #212121 !important;
+    color: white;
+    cursor: pointer;
+}

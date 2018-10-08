@@ -38,20 +38,16 @@ class App extends Component {
         <div className="signIn">
           <AccountsUIWrapper/>
         </div>
-        <br/>
-        
         <div className="container">
-            
           {this.props.currentUser ? 
             <Session/>:
-            // <Board/> :
             <div className="welcome">
+              <i className="fas fa-bomb"/> 
               <h1>Welcome to <b>Pongaminas</b></h1> 
               <h3>Please sign in to play</h3>
             </div>
           }
         </div>
-    
       </div>
     );
   }
