@@ -55,7 +55,37 @@ class Lobby extends Component {
   }
 
 
+
   render() {
+    let game;
+    if(this.props.session.gameStart !== undefined){
+      let winnerName;
+      if(this.props.winner){
+        winnerName = Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].status==="Won"]).find(e=>{
+          return e[1];
+        })[0];
+      }
+     
+      game = <div>
+        <h1>Game has started</h1>
+        {this.props.winner ?  <h1>The winner is {winnerName}</h1> : "" }
+        <div>
+          <Board
+            session_id={this.props.session._id}
+            rows={this.props.session.config.numRows}
+            cols={this.props.session.config.numCols}
+            bombs={this.props.session.config.numBombs}
+            currentUser={this.props.user}/>
+        </div>
+      </div>;
+    }
+    // if(this.props.session.gameStart !== undefined && this.props.winner){
+    //   const winnerName = Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].status==="Won"]).find(e=>{
+    //     return e[1];
+    //   })[0];
+    //   game = <h1>The winner is {winnerName}</h1> + game;
+    // }
+
     return (
       <div id="lobby-container">
         <h1 id="lobby-session">Session {this.props.session.id}
@@ -78,18 +108,8 @@ class Lobby extends Component {
                 <button className="startGame" onClick={this.startGame.bind( this )}>Start!</button>
               </div>
             :
-            <div>
-              <h1>Game has started</h1>
-              <div>
-                <Board
-                  session_id={this.props.session._id}
-                  rows={this.props.session.config.numRows}
-                  cols={this.props.session.config.numCols}
-                  bombs={this.props.session.config.numBombs}
-                  currentUser={this.props.user}/>
-              </div>
-            </div>
-            //board goes here
+            game
+            
           }
           
           <h1>Leaderboard</h1>
@@ -115,13 +135,17 @@ Lobby.propTypes = {
   session_id: PropTypes.number.isRequired,
   session: PropTypes.object,
   sessionType: PropTypes.string.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  winner: PropTypes.bool.isRequired,
 };
 
 export default withTracker( ( props ) => {
   return {
     session: Sessions.findOne( { "id": props.session_id } ),
-    user: Meteor.user()
+    user: Meteor.user(),
+    winner : Object.keys(Sessions.findOne( { "id": props.session_id } ).users).map(k=>Sessions.findOne( { "id": props.session_id } ).users[k].status=="Won").some((element) =>{
+      return element;
+    })
   };
 } )( Lobby );
 
