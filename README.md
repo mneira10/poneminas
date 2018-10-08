@@ -1,7 +1,8 @@
  # Pongamingas 
- 
- ## Objective
- Create a multiplayer minesweeper game. 
+
+Multiplayer minesweeper game. 
+
+![Screenshot](https://raw.githubusercontent.com/mneira10/poneminas/master/screenshot.png)
  
  ## Used technologies
  - React
@@ -24,10 +25,7 @@
 
 ## Demo
 [Here](http://poneminas.herokuapp.com/)
-## Screenshot
 
 
-## MIT 
- 2) Cómo se corre (prerrequisitos etc), 
- 3) Autores con links, y link a la página del proyecto, 
- 4) Un screenshot, 5) La licencia MIT. Por último el proyecto debe de estar listado bajo la licencia MIT
+## Licence
+This project is registered under the MIT licence. See ./LICENCE for details. 
