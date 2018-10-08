@@ -136,6 +136,34 @@ export default class Board extends Component {
     }
   }
 
+  bombDiscovered(isAdding){
+    let up = {};
+    up[`users.${this.props.currentUser.username}.score`] = (isAdding ? 1 : -1);
+    Sessions.update(
+      {_id: this.props.session_id},
+      { "$inc":  up}
+    );
+    let s = Sessions.findOne({"_id": this.props.session_id});
+    if(this.props.bombs === s.users[this.props.currentUser.username].score ){
+      let won = true;
+      for (let i = 0; i < this.props.rows && won; i++) {
+        for (let j = 0; j < this.props.cols && won; j++) {
+          if(this.cells[i][j].current.props.state === constants.BOMB && this.cells[i][j].current.state.flag !== 1) {
+            won = false;
+          }
+        }
+      }
+      if(won){
+        let u = {};
+        u[`users.${this.props.currentUser.username}.status`] = "Won";
+        Sessions.update(
+          {_id: this.props.session_id},
+          {"$set": u}
+        );
+      }
+    }
+  }
+
   initGame() {
     this.logicCells = this.get_initial_state();
     this.placeBombs( this.logicCells );
@@ -163,17 +191,6 @@ export default class Board extends Component {
       } );
       this.forceUpdate();
     }
-  }
-
-  bombDiscovered(isAdding){
-    console.log("Updating", this.props.session_id);
-    
-    let up = {};
-    up[`users.${this.props.currentUser.username}.score`] =(isAdding ? 1 : -1);
-    Sessions.update(
-      {_id: this.props.session_id},
-      { "$inc":  up}
-    );
   }
 
   render() {
