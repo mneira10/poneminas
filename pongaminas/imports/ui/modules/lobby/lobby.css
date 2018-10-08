@@ -4,14 +4,15 @@
     font-family: 'Press Start 2P', cursive;
 }
 
-#lobby-session button{
+.startGame{
     background-color: transparent;
-    color: #212121;
+    color: white;
     font-size: 100%;
     border: 1px solid transparent;
     cursor: pointer;
     position: relative;
     top: -5px;
+    margin-top: 15px;
     animation-name: play;
     animation-duration: 1s;
     animation-iteration-count: infinite;
@@ -42,4 +43,8 @@
 
 .lost { 
     text-decoration:line-through;
+}
+
+.setupGame{
+    padding: 5px;
 }

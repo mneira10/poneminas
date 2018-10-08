@@ -43,8 +43,9 @@ class Session extends Component {
           { _id: s._id },
           secondObj
         );
-
-     
+      }
+      else if(Object.keys(s.users.filter((u) => u === this.props.user.username && u.status === "Lost"))){
+        return;
       }
       this.setState( { session: { active: true, number: session } , type : "join"} );
     }

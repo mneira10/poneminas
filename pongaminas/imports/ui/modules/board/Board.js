@@ -41,8 +41,10 @@ export default class Board extends Component {
     return c;
   }
 
-  placeBombs( c1 ) {
+  placeBombs( c1, numBombs ) {
     let freeCells = c1.flat();
+
+    freeCells = freeCells.filter((c) => c.state !== constants.BOMB);
 
     let updateNeighbors = ( r, c ) => {
       for ( let i = Math.max( 0, r - 1 ); i <= Math.min( r + 1, this.state.dimensions.rows - 1 ); i++ ) {
@@ -54,7 +56,7 @@ export default class Board extends Component {
       }
     };
 
-    for ( let i = 0; i < this.state.numBombs; i++ ) {
+    for ( let i = 0; i < numBombs; i++ ) {
       let index = Board.getRandomInt( 0, freeCells.length );
       let cellBomb = freeCells[ index ];
       cellBomb.state = constants.BOMB;
@@ -103,11 +105,40 @@ export default class Board extends Component {
     }
   }
 
+  getBombsArround(r,c){
+    let count  = 0;
+    for ( let i = Math.max( 0, r - 1 ); i <= Math.min( r + 1, this.state.dimensions.rows - 1 ); i++ ) {
+      for ( let j = Math.max( 0, c - 1 ); j <= Math.min( c + 1, this.state.dimensions.cols - 1 ); j++ ) {
+        if ( !(i === r && j === c) && isNaN( this.logicCells[ i ][ j ].state ) ) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
   boxClickHandle( r, c, state ) {
     if ( !this.lost ) {
       if ( !this.cells[ r ][ c ].current.show() ) {
         this.cells[ r ][ c ].current.show( true );
         if ( !this.firstClick ) {
+
+          if(state === constants.BOMB){
+            this.logicCells[r][c].state = this.getBombsArround(r,c);
+
+            this.placeBombs(this.logicCells, 1);
+            let ind = this.bombs.indexOf([r,c]);
+            this.bombs.splice(ind, 1);
+
+            for ( let i = Math.max( 0, r - 1 ); i <= Math.min( r + 1, this.state.dimensions.rows - 1 ); i++ ) {
+              for ( let j = Math.max( 0, c - 1 ); j <= Math.min( c + 1, this.state.dimensions.cols - 1 ); j++ ) {
+                if ( !(i === r && j === c) && !isNaN( this.logicCells[ i ][ j ].state ) ) {
+                  this.logicCells[ i ][ j ].state--;
+                }
+              }
+            }
+          }
+
           // TODO: remove bomb
           // TODO: 3 as depth
           this.floodFill( r, c, 3 );
@@ -166,7 +197,7 @@ export default class Board extends Component {
 
   initGame() {
     this.logicCells = this.get_initial_state();
-    this.placeBombs( this.logicCells );
+    this.placeBombs( this.logicCells, this.state.numBombs );
   }
 
   showBoard() {
@@ -176,6 +207,10 @@ export default class Board extends Component {
       }
     }
     this.forceUpdate();
+  }
+
+  blockBoard(){
+    this.lost = true;
   }
 
   showElse( r, c ) {
@@ -224,5 +259,5 @@ Board.propTypes = {
   cols: PropTypes.number.isRequired,
   bombs: PropTypes.number.isRequired,
   session_id: PropTypes.string.isRequired,
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired
 };

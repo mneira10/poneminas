@@ -69,7 +69,8 @@ export default class Box extends Component {
     }
 
     return (
-      <button className={"grid-item " + (this.state.show ? "active" : "")} style={{ color: (this.state.show && colors[ this.props.state ]) }}
+      <button className={"grid-item " + (this.state.show ? "active" : "")} 
+        style={{ color: (this.state.show && colors[ this.props.state ]), fontSize: ((this.state.flag !== 0 )|| !(this.state.flag === 0 && this.state.show && (this.props.state === 0))? "1em" : "") }}
         onClick={this.handleClick}
         onContextMenu={this.contextHandleClick}>
         {this.state.flag !== 0 && box_state}

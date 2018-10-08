@@ -15,6 +15,7 @@ class Lobby extends Component {
     this.numRowsInput = React.createRef();
     this.numColsInput = React.createRef();
     this.numBombsInput = React.createRef();
+    this.boardRef = React.createRef();
   }
 
   startGame() {
@@ -54,8 +55,6 @@ class Lobby extends Component {
     }
   }
 
-
-
   render() {
     let game;
     if(this.props.session.gameStart !== undefined){
@@ -64,10 +63,10 @@ class Lobby extends Component {
         winnerName = Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].status==="Won"]).find(e=>{
           return e[1];
         })[0];
+        this.boardRef.current.blockBoard();
       }
      
       game = <div>
-        <h1>Game has started</h1>
         {this.props.winner ?  <h1>The winner is {winnerName}</h1> : "" }
         <div>
           <Board
@@ -75,22 +74,15 @@ class Lobby extends Component {
             rows={this.props.session.config.numRows}
             cols={this.props.session.config.numCols}
             bombs={this.props.session.config.numBombs}
-            currentUser={this.props.user}/>
+            currentUser={this.props.user}
+            ref={this.boardRef}/>
         </div>
       </div>;
     }
-    // if(this.props.session.gameStart !== undefined && this.props.winner){
-    //   const winnerName = Object.keys(this.props.session.users).map(k=>[k,this.props.session.users[k].status==="Won"]).find(e=>{
-    //     return e[1];
-    //   })[0];
-    //   game = <h1>The winner is {winnerName}</h1> + game;
-    // }
 
     return (
       <div id="lobby-container">
-        <h1 id="lobby-session">Session {this.props.session.id}
-          <button><i className="fas fa-play"/></button>
-        </h1>
+        <h1 id="lobby-session">Session {this.props.session.id}</h1>
         <div id="lobby-users">
 
           {this.props.session.gameStart === undefined ?
@@ -105,7 +97,7 @@ class Lobby extends Component {
                 <p>Number of Mines:</p>
                 <input type="number" ref={this.numBombsInput} className="numBombs"/>
                 <br/>
-                <button className="startGame" onClick={this.startGame.bind( this )}>Start!</button>
+                <button className="startGame" onClick={this.startGame.bind( this )}><i className="fas fa-play"/></button>
               </div>
             :
             game
