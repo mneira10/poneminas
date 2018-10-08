@@ -10,6 +10,8 @@
     font-size: 100%;
     border: 1px solid transparent;
     cursor: pointer;
+    position: relative;
+    top: -5px;
     animation-name: play;
     animation-duration: 1s;
     animation-iteration-count: infinite;

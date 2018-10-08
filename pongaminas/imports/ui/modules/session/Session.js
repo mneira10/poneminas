@@ -33,7 +33,7 @@ class Session extends Component {
       else {
         Sessions.update(
           { _id: s._id },
-          { "$push": { users: this.props.user } }
+          { "$push": { users: {...this.props.user, bombs: 0} } }
         );
         this.setState( { session: { active: true, number: session, users: [ ...s.users, {...this.props.user, bombs: 0} ] } } );
       }
@@ -46,7 +46,7 @@ class Session extends Component {
     Sessions.insert( {
       id: newSession, // session id
       createdAt: new Date(), // current time,
-      users: [ {...this.props.user, bombs:0} ]
+      users: [ {...this.props.user, bombs: 0} ]
     } );
   }
 
