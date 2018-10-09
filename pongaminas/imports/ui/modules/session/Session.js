@@ -6,6 +6,7 @@ import { Meteor } from "meteor/meteor";
 import Lobby from "../lobby/Lobby";
 import "./session.css";
 
+//seria bueno hacer mas intiutivo hacer la parte de join session , es poco dificil saber como funciona
 
 class Session extends Component {
 
