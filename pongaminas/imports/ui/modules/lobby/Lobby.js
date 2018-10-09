@@ -6,7 +6,9 @@ import { Meteor } from "meteor/meteor";
 import "./lobby.css";
 import Board from "../board/Board";
 
+//cuando le doy a crear puede que me haya equivocado y quisiera devolver a unirme a sala , seria bueno tener un boton que me haga un render de la pagina principal
 
+//cuando termino el juego seria igualmente util tener un boton que me devuelva la pagina principal de nuevo , en caso de que quiera volver a jugar
 class Lobby extends Component {
   constructor( props ) {
     super( props );
